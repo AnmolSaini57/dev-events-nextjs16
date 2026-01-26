@@ -10,7 +10,6 @@ export async function GET(
     await connectDB();
 
     const { slug } = await params;
-    console.log(req);
 
     if (!slug || typeof slug !== "string" || slug.trim() === "") {
       return NextResponse.json(

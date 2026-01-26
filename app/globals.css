@@ -3,6 +3,15 @@
 
 @custom-variant dark (&:is(.dark *));
 
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+#events {
+  scroll-margin-top: 96px; /* match your header height */
+}
+
 :root {
   --color-blue: #94eaff;
   --color-light-100: #e7f2ff;
