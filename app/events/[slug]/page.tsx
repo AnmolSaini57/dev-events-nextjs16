@@ -2,10 +2,11 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import BookEvent from "@/components/BookEvent";
 import { IEvent } from "@/database/event.model";
-import { getSimilarEventsBySlug } from "@/lib/actions/event.action";
+import {
+  getEventBySlug,
+  getSimilarEventsBySlug,
+} from "@/lib/actions/event.action";
 import EventCard from "@/components/EventCard";
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const EventDetailItem = ({
   icon,
@@ -51,9 +52,8 @@ const EventDetailsPage = async ({
   params: Promise<{ slug: string }>;
 }) => {
   const { slug } = await params;
-  const response = await fetch(`${BASE_URL}/api/events/${slug}`);
-  const { event } = await response.json();
-  event.bookings = 10; // For demo purposes
+  const event = await getEventBySlug(slug);
+  const bookings = 10; // For demo purposes
 
   if (!event) return notFound();
 
@@ -130,9 +130,9 @@ const EventDetailsPage = async ({
         <aside className="booking">
           <div className="signup-card">
             <h2>Book Your Spot</h2>
-            {event.bookings > 0 ? (
+            {bookings > 0 ? (
               <p className="text-sm">
-                Join {event.bookings} people who have already booked their spot!
+                Join {bookings} people who have already booked their spot!
               </p>
             ) : (
               <p className="text-sm">Be the first to Book Your Spot!</p>
